@@ -1,0 +1,787 @@
+openapi: 3.0.1
+info:
+  contact:
+    name: FilterLists
+    url: https://filterlists.com
+  description: An ASP.NET Core API serving the core FilterList information.
+  license:
+    name: MIT License
+    url: https://github.com/collinbarrett/FilterLists/blob/main/LICENSE
+  title: FilterLists Directory API
+  version: v1
+servers:
+- url: http://filterlists.com/api/directory
+paths:
+  /languages:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FilterLists.Directory.Application.Queries.GetLanguages.LanguageVm'
+                type: array
+          description: Success
+      summary: Gets the languages targeted by the FilterLists.
+      tags:
+      - Languages
+  /licenses:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FilterLists.Directory.Application.Queries.GetLicenses.LicenseVm'
+                type: array
+          description: Success
+      summary: Gets the licenses applied to the FilterLists.
+      tags:
+      - Licenses
+  /lists:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FilterLists.Directory.Api.Contracts.Models.ListVm'
+                type: array
+          description: Success
+      summary: Gets the FilterLists.
+      tags:
+      - Lists
+  /lists/{id}:
+    get:
+      parameters:
+      - description: The identifier of the FilterList.
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterLists.Directory.Api.Contracts.Models.ListDetailsVm'
+          description: Success
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails'
+          description: Not Found
+      summary: Gets the details of the FilterList.
+      tags:
+      - Lists
+  /maintainers:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FilterLists.Directory.Application.Queries.GetMaintainers.MaintainerVm'
+                type: array
+          description: Success
+      summary: Gets the maintainers of the FilterLists.
+      tags:
+      - Maintainers
+  /software:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FilterLists.Directory.Application.Queries.GetSoftware.SoftwareVm'
+                type: array
+          description: Success
+      summary: Gets the software that subscribes to the FilterLists.
+      tags:
+      - Software
+  /syntaxes:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FilterLists.Directory.Application.Queries.GetSyntaxes.SyntaxVm'
+                type: array
+          description: Success
+      summary: Gets the syntaxes of the FilterLists.
+      tags:
+      - Syntaxes
+  /tags:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FilterLists.Directory.Application.Queries.GetTags.TagVm'
+                type: array
+          description: Success
+      summary: Gets the tags of the FilterLists.
+      tags:
+      - Tags
+components:
+  schemas:
+    FilterLists.Directory.Api.Contracts.Models.ListDetailsVm:
+      additionalProperties: false
+      example:
+        upstreamFilterListIds:
+        - 0
+        - 0
+        forkFilterListIds:
+        - 166
+        - 565
+        dependentFilterListIds:
+        - 5
+        - 5
+        donateUrl: https://openapi-generator.tech
+        issuesUrl: https://github.com/easylist/easylist/issues
+        tagIds:
+        - 2
+        description: "EasyList is the primary filter list that removes most adverts\
+          \ from international web pages, including unwanted frames, images, and objects.\
+          \ It is the most popular list used by many ad blockers and forms the basis\
+          \ of over a dozen combination and supplementary filter lists."
+        languageIds:
+        - 37
+        onionUrl: https://openapi-generator.tech
+        viewUrls:
+        - segmentNumber: 1
+          primariness: 1
+          url: https://easylist.to/easylist/easylist.txt
+        - segmentNumber: 1
+          primariness: 1
+          url: https://easylist.to/easylist/easylist.txt
+        syntaxIds:
+        - 3
+        homeUrl: https://easylist.to/
+        policyUrl: https://openapi-generator.tech
+        maintainerIds:
+        - 7
+        emailAddress: easylist@protonmail.com
+        dependencyFilterListIds:
+        - 1
+        - 1
+        name: EasyList
+        includesFilterListIds:
+        - 11
+        - 13
+        - 168
+        forumUrl: https://forums.lanik.us/viewforum.php?f=23
+        chatUrl: https://openapi-generator.tech
+        id: 301
+        licenseId: 4
+        submissionUrl: https://openapi-generator.tech
+        includedInFilterListIds:
+        - 6
+        - 6
+      properties:
+        id:
+          description: The identifier.
+          example: 301
+          format: int64
+          type: integer
+        name:
+          description: The unique name in title case.
+          example: EasyList
+          type: string
+        description:
+          description: The brief description in English (preferably quoted from the
+            project).
+          example: "EasyList is the primary filter list that removes most adverts\
+            \ from international web pages, including unwanted frames, images, and\
+            \ objects. It is the most popular list used by many ad blockers and forms\
+            \ the basis of over a dozen combination and supplementary filter lists."
+          nullable: true
+          type: string
+        licenseId:
+          description: The identifier of the License under which this FilterList is
+            released.
+          example: 4
+          format: int64
+          type: integer
+        syntaxIds:
+          description: The identifiers of the Syntaxes implemented by this FilterList.
+          example:
+          - 3
+          items:
+            format: int64
+            type: integer
+          type: array
+        languageIds:
+          description: The identifiers of the Languages targeted by this FilterList.
+          example:
+          - 37
+          items:
+            format: int64
+            type: integer
+          type: array
+        tagIds:
+          description: The identifiers of the Tags applied to this FilterList.
+          example:
+          - 2
+          items:
+            format: int64
+            type: integer
+          type: array
+        viewUrls:
+          description: The view URLs.
+          items:
+            $ref: '#/components/schemas/FilterLists.Directory.Api.Contracts.Models.ListDetailsVm.ViewUrlVm'
+          type: array
+        homeUrl:
+          description: The URL of the home page.
+          example: https://easylist.to/
+          format: uri
+          nullable: true
+          type: string
+        onionUrl:
+          description: The URL of the Tor / Onion page.
+          format: uri
+          nullable: true
+          type: string
+          example: null
+        policyUrl:
+          description: The URL of the policy/guidelines for the types of rules this
+            FilterList includes.
+          format: uri
+          nullable: true
+          type: string
+          example: null
+        submissionUrl:
+          description: The URL of the submission/contact form for adding rules to
+            this FilterList.
+          format: uri
+          nullable: true
+          type: string
+          example: null
+        issuesUrl:
+          description: The URL of the GitHub Issues page.
+          example: https://github.com/easylist/easylist/issues
+          format: uri
+          nullable: true
+          type: string
+        forumUrl:
+          description: The URL of the forum page.
+          example: https://forums.lanik.us/viewforum.php?f=23
+          format: uri
+          nullable: true
+          type: string
+        chatUrl:
+          description: The URL of the chat room.
+          format: uri
+          nullable: true
+          type: string
+          example: null
+        emailAddress:
+          description: The email address at which the project can be contacted.
+          example: easylist@protonmail.com
+          nullable: true
+          type: string
+        donateUrl:
+          description: The URL at which donations to the project can be made.
+          format: uri
+          nullable: true
+          type: string
+          example: null
+        maintainerIds:
+          description: The identifiers of the Maintainers of this FilterList.
+          example:
+          - 7
+          items:
+            format: int64
+            type: integer
+          type: array
+        upstreamFilterListIds:
+          description: The identifiers of the FilterLists from which this FilterList
+            was forked.
+          items:
+            format: int64
+            type: integer
+          type: array
+        forkFilterListIds:
+          description: The identifiers of the FilterLists that have been forked from
+            this FilterList.
+          example:
+          - 166
+          - 565
+          items:
+            format: int64
+            type: integer
+          type: array
+        includedInFilterListIds:
+          description: The identifiers of the FilterLists that include this FilterList.
+          items:
+            format: int64
+            type: integer
+          type: array
+        includesFilterListIds:
+          description: The identifiers of the FilterLists that this FilterList includes.
+          example:
+          - 11
+          - 13
+          - 168
+          items:
+            format: int64
+            type: integer
+          type: array
+        dependencyFilterListIds:
+          description: The identifiers of the FilterLists that this FilterList depends
+            upon.
+          items:
+            format: int64
+            type: integer
+          type: array
+        dependentFilterListIds:
+          description: The identifiers of the FilterLists dependent upon this FilterList.
+          items:
+            format: int64
+            type: integer
+          type: array
+      type: object
+    FilterLists.Directory.Api.Contracts.Models.ListDetailsVm.ViewUrlVm:
+      additionalProperties: false
+      example:
+        segmentNumber: 1
+        primariness: 1
+        url: https://easylist.to/easylist/easylist.txt
+      properties:
+        segmentNumber:
+          description: The segment number of the URL for the FilterList (for multi-part
+            lists).
+          example: 1
+          format: int32
+          type: integer
+        primariness:
+          description: "How primary the URL is for the FilterList segment (1 is original,\
+            \ 2+ is a mirror; unique per SegmentNumber)"
+          example: 1
+          format: int32
+          type: integer
+        url:
+          description: The view URL.
+          example: https://easylist.to/easylist/easylist.txt
+          format: uri
+          type: string
+      type: object
+    FilterLists.Directory.Api.Contracts.Models.ListVm:
+      additionalProperties: false
+      example:
+        maintainerIds:
+        - 7
+        tagIds:
+        - 2
+        name: EasyList
+        description: "EasyList is the primary filter list that removes most adverts\
+          \ from international web pages, including unwanted frames, images, and objects.\
+          \ It is the most popular list used by many ad blockers and forms the basis\
+          \ of over a dozen combination and supplementary filter lists."
+        languageIds:
+        - 37
+        id: 301
+        licenseId: 4
+        primaryViewUrl: https://easylist.to/easylist/easylist.txt
+        syntaxIds:
+        - 3
+      properties:
+        id:
+          description: The identifier.
+          example: 301
+          format: int64
+          type: integer
+        name:
+          description: The unique name in title case.
+          example: EasyList
+          type: string
+        description:
+          description: The brief description in English (preferably quoted from the
+            project).
+          example: "EasyList is the primary filter list that removes most adverts\
+            \ from international web pages, including unwanted frames, images, and\
+            \ objects. It is the most popular list used by many ad blockers and forms\
+            \ the basis of over a dozen combination and supplementary filter lists."
+          nullable: true
+          type: string
+        licenseId:
+          description: The identifier of the License under which this FilterList is
+            released.
+          example: 4
+          format: int64
+          type: integer
+        syntaxIds:
+          description: The identifiers of the Syntaxes implemented by this FilterList.
+          example:
+          - 3
+          items:
+            format: int64
+            type: integer
+          type: array
+        languageIds:
+          description: The identifiers of the Languages targeted by this FilterList.
+          example:
+          - 37
+          items:
+            format: int64
+            type: integer
+          type: array
+        tagIds:
+          description: The identifiers of the Tags applied to this FilterList.
+          example:
+          - 2
+          items:
+            format: int64
+            type: integer
+          type: array
+        primaryViewUrl:
+          description: The primary view URL.
+          example: https://easylist.to/easylist/easylist.txt
+          format: uri
+          nullable: true
+          type: string
+        maintainerIds:
+          description: The identifiers of the Maintainers of this FilterList.
+          example:
+          - 7
+          items:
+            format: int64
+            type: integer
+          type: array
+      type: object
+    FilterLists.Directory.Application.Queries.GetLanguages.LanguageVm:
+      additionalProperties: false
+      example:
+        name: English
+        filterListIds:
+        - 114
+        - 141
+        id: 37
+        iso6391: en
+      properties:
+        id:
+          description: The identifier.
+          example: 37
+          format: int64
+          readOnly: true
+          type: integer
+        iso6391:
+          description: The unique ISO 639-1 code.
+          example: en
+          readOnly: true
+          type: string
+        name:
+          description: The unique ISO name.
+          example: English
+          readOnly: true
+          type: string
+        filterListIds:
+          description: The identifiers of the FilterLists targeted by this Language.
+          example:
+          - 114
+          - 141
+          items:
+            format: int64
+            type: integer
+          readOnly: true
+          type: array
+      type: object
+    FilterLists.Directory.Application.Queries.GetLicenses.LicenseVm:
+      additionalProperties: false
+      example:
+        permitsModification: false
+        name: All Rights Reserved
+        permitsCommercialUse: false
+        filterListIds:
+        - 6
+        - 31
+        permitsDistribution: false
+        id: 5
+        url: https://en.wikipedia.org/wiki/All_rights_reserved
+      properties:
+        id:
+          description: The identifier.
+          example: 5
+          format: int64
+          readOnly: true
+          type: integer
+        name:
+          description: The unique name.
+          example: All Rights Reserved
+          readOnly: true
+          type: string
+        url:
+          description: The URL of the home page.
+          example: https://en.wikipedia.org/wiki/All_rights_reserved
+          format: uri
+          nullable: true
+          readOnly: true
+          type: string
+        permitsModification:
+          description: If the License permits modification.
+          example: false
+          readOnly: true
+          type: boolean
+        permitsDistribution:
+          description: If the License permits distribution.
+          example: false
+          readOnly: true
+          type: boolean
+        permitsCommercialUse:
+          description: If the License permits commercial use.
+          example: false
+          readOnly: true
+          type: boolean
+        filterListIds:
+          description: The identifiers of the FilterLists released under this License.
+          example:
+          - 6
+          - 31
+          items:
+            format: int64
+            type: integer
+          readOnly: true
+          type: array
+      type: object
+    FilterLists.Directory.Application.Queries.GetMaintainers.MaintainerVm:
+      additionalProperties: false
+      example:
+        emailAddress: emailAddress
+        twitterHandle: twitterHandle
+        name: The EasyList Authors
+        filterListIds:
+        - 11
+        - 13
+        - 301
+        id: 7
+        url: https://easylist.to/
+      properties:
+        id:
+          description: The identifier.
+          example: 7
+          format: int64
+          type: integer
+        name:
+          description: The unique name.
+          example: The EasyList Authors
+          type: string
+        url:
+          description: The URL of the home page.
+          example: https://easylist.to/
+          format: uri
+          nullable: true
+          type: string
+        emailAddress:
+          description: The email address.
+          nullable: true
+          type: string
+          example: null
+        twitterHandle:
+          description: The Twitter handle.
+          nullable: true
+          type: string
+          example: null
+        filterListIds:
+          description: The identifiers of the FilterLists maintained by this Maintainer.
+          example:
+          - 11
+          - 13
+          - 301
+          items:
+            format: int64
+            type: integer
+          type: array
+      type: object
+    FilterLists.Directory.Application.Queries.GetSoftware.SoftwareVm:
+      additionalProperties: false
+      example:
+        homeUrl: https://adblockplus.org/
+        name: Adblock Plus
+        downloadUrl: https://adblockplus.org/
+        description: "Adblock Plus is a free extension that allows you to customize\
+          \ your web experience. You can block annoying ads, disable tracking and\
+          \ lots more. It’s available for all major desktop browsers and for your\
+          \ mobile devices."
+        id: 2
+        supportsAbpUrlScheme: true
+        syntaxIds:
+        - 3
+        - 28
+        - 38
+        - 48
+      properties:
+        id:
+          description: The identifier.
+          example: 2
+          format: int64
+          type: integer
+        name:
+          description: The unique name.
+          example: Adblock Plus
+          type: string
+        description:
+          description: The description.
+          example: "Adblock Plus is a free extension that allows you to customize\
+            \ your web experience. You can block annoying ads, disable tracking and\
+            \ lots more. It’s available for all major desktop browsers and for your\
+            \ mobile devices."
+          nullable: true
+          type: string
+        homeUrl:
+          description: The URL of the home page.
+          example: https://adblockplus.org/
+          format: uri
+          nullable: true
+          type: string
+        downloadUrl:
+          description: The URL of the Software download.
+          example: https://adblockplus.org/
+          format: uri
+          nullable: true
+          type: string
+        supportsAbpUrlScheme:
+          description: "If the Software supports the abp: URL scheme to click-to-subscribe\
+            \ to a FilterList."
+          example: true
+          type: boolean
+        syntaxIds:
+          description: The identifiers of the Syntaxes that this Software supports.
+          example:
+          - 3
+          - 28
+          - 38
+          - 48
+          items:
+            format: int64
+            type: integer
+          type: array
+      type: object
+    FilterLists.Directory.Application.Queries.GetSyntaxes.SyntaxVm:
+      additionalProperties: false
+      example:
+        softwareIds:
+        - 1
+        - 2
+        - 3
+        name: Adblock Plus
+        filterListIds:
+        - 2
+        - 6
+        - 11
+        description: description
+        id: 3
+        url: https://adblockplus.org/filters
+      properties:
+        id:
+          description: The identifier.
+          example: 3
+          format: int64
+          type: integer
+        name:
+          description: The unique name.
+          example: Adblock Plus
+          type: string
+        description:
+          description: The description.
+          nullable: true
+          type: string
+          example: null
+        url:
+          description: The URL of the home page.
+          example: https://adblockplus.org/filters
+          format: uri
+          nullable: true
+          type: string
+        filterListIds:
+          description: The identifiers of the FilterLists implementing this Syntax.
+          example:
+          - 2
+          - 6
+          - 11
+          items:
+            format: int64
+            type: integer
+          type: array
+        softwareIds:
+          description: The identifiers of the Software that supports this Syntax.
+          example:
+          - 1
+          - 2
+          - 3
+          items:
+            format: int64
+            type: integer
+          type: array
+      type: object
+    FilterLists.Directory.Application.Queries.GetTags.TagVm:
+      additionalProperties: false
+      example:
+        name: ads
+        filterListIds:
+        - 1
+        - 3
+        - 6
+        description: Blocks advertisements
+        id: 2
+      properties:
+        id:
+          description: The identifier.
+          example: 2
+          format: int64
+          type: integer
+        name:
+          description: The unique name.
+          example: ads
+          type: string
+        description:
+          description: The description.
+          example: Blocks advertisements
+          nullable: true
+          type: string
+        filterListIds:
+          description: The identifiers of the FilterLists to which this Tag is applied.
+          example:
+          - 1
+          - 3
+          - 6
+          items:
+            format: int64
+            type: integer
+          type: array
+      type: object
+    Microsoft.AspNetCore.Mvc.ProblemDetails:
+      additionalProperties: {}
+      properties:
+        type:
+          nullable: true
+          type: string
+        title:
+          nullable: true
+          type: string
+        status:
+          format: int32
+          nullable: true
+          type: integer
+        detail:
+          nullable: true
+          type: string
+        instance:
+          nullable: true
+          type: string
+      type: object

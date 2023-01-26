@@ -1,0 +1,853 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "FilterLists Directory API",
+    "description": "An ASP.NET Core API serving the core FilterList information.",
+    "contact": {
+      "name": "FilterLists",
+      "url": "https://filterlists.com"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://github.com/collinbarrett/FilterLists/blob/main/LICENSE"
+    },
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://filterlists.com/api/directory"
+    }
+  ],
+  "paths": {
+    "/languages": {
+      "get": {
+        "tags": [
+          "Languages"
+        ],
+        "summary": "Gets the languages targeted by the FilterLists.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FilterLists.Directory.Application.Queries.GetLanguages.LanguageVm"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/licenses": {
+      "get": {
+        "tags": [
+          "Licenses"
+        ],
+        "summary": "Gets the licenses applied to the FilterLists.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FilterLists.Directory.Application.Queries.GetLicenses.LicenseVm"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lists": {
+      "get": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Gets the FilterLists.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FilterLists.Directory.Api.Contracts.Models.ListVm"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lists/{id}": {
+      "get": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Gets the details of the FilterList.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The identifier of the FilterList.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilterLists.Directory.Api.Contracts.Models.ListDetailsVm"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maintainers": {
+      "get": {
+        "tags": [
+          "Maintainers"
+        ],
+        "summary": "Gets the maintainers of the FilterLists.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FilterLists.Directory.Application.Queries.GetMaintainers.MaintainerVm"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/software": {
+      "get": {
+        "tags": [
+          "Software"
+        ],
+        "summary": "Gets the software that subscribes to the FilterLists.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FilterLists.Directory.Application.Queries.GetSoftware.SoftwareVm"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/syntaxes": {
+      "get": {
+        "tags": [
+          "Syntaxes"
+        ],
+        "summary": "Gets the syntaxes of the FilterLists.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FilterLists.Directory.Application.Queries.GetSyntaxes.SyntaxVm"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tags": {
+      "get": {
+        "tags": [
+          "Tags"
+        ],
+        "summary": "Gets the tags of the FilterLists.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FilterLists.Directory.Application.Queries.GetTags.TagVm"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FilterLists.Directory.Api.Contracts.Models.ListDetailsVm": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The identifier.",
+            "format": "int64",
+            "example": 301
+          },
+          "name": {
+            "type": "string",
+            "description": "The unique name in title case.",
+            "example": "EasyList"
+          },
+          "description": {
+            "type": "string",
+            "description": "The brief description in English (preferably quoted from the project).",
+            "nullable": true,
+            "example": "EasyList is the primary filter list that removes most adverts from international web pages, including unwanted frames, images, and objects. It is the most popular list used by many ad blockers and forms the basis of over a dozen combination and supplementary filter lists."
+          },
+          "licenseId": {
+            "type": "integer",
+            "description": "The identifier of the License under which this FilterList is released.",
+            "format": "int64",
+            "example": 4
+          },
+          "syntaxIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Syntaxes implemented by this FilterList.",
+            "example": [
+              3
+            ]
+          },
+          "languageIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Languages targeted by this FilterList.",
+            "example": [
+              37
+            ]
+          },
+          "tagIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Tags applied to this FilterList.",
+            "example": [
+              2
+            ]
+          },
+          "viewUrls": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FilterLists.Directory.Api.Contracts.Models.ListDetailsVm.ViewUrlVm"
+            },
+            "description": "The view URLs."
+          },
+          "homeUrl": {
+            "type": "string",
+            "description": "The URL of the home page.",
+            "format": "uri",
+            "nullable": true,
+            "example": "https://easylist.to/"
+          },
+          "onionUrl": {
+            "type": "string",
+            "description": "The URL of the Tor / Onion page.",
+            "format": "uri",
+            "nullable": true,
+            "example": null
+          },
+          "policyUrl": {
+            "type": "string",
+            "description": "The URL of the policy/guidelines for the types of rules this FilterList includes.",
+            "format": "uri",
+            "nullable": true,
+            "example": null
+          },
+          "submissionUrl": {
+            "type": "string",
+            "description": "The URL of the submission/contact form for adding rules to this FilterList.",
+            "format": "uri",
+            "nullable": true,
+            "example": null
+          },
+          "issuesUrl": {
+            "type": "string",
+            "description": "The URL of the GitHub Issues page.",
+            "format": "uri",
+            "nullable": true,
+            "example": "https://github.com/easylist/easylist/issues"
+          },
+          "forumUrl": {
+            "type": "string",
+            "description": "The URL of the forum page.",
+            "format": "uri",
+            "nullable": true,
+            "example": "https://forums.lanik.us/viewforum.php?f=23"
+          },
+          "chatUrl": {
+            "type": "string",
+            "description": "The URL of the chat room.",
+            "format": "uri",
+            "nullable": true,
+            "example": null
+          },
+          "emailAddress": {
+            "type": "string",
+            "description": "The email address at which the project can be contacted.",
+            "nullable": true,
+            "example": "easylist@protonmail.com"
+          },
+          "donateUrl": {
+            "type": "string",
+            "description": "The URL at which donations to the project can be made.",
+            "format": "uri",
+            "nullable": true,
+            "example": null
+          },
+          "maintainerIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Maintainers of this FilterList.",
+            "example": [
+              7
+            ]
+          },
+          "upstreamFilterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists from which this FilterList was forked."
+          },
+          "forkFilterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists that have been forked from this FilterList.",
+            "example": [
+              166,
+              565
+            ]
+          },
+          "includedInFilterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists that include this FilterList."
+          },
+          "includesFilterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists that this FilterList includes.",
+            "example": [
+              11,
+              13,
+              168
+            ]
+          },
+          "dependencyFilterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists that this FilterList depends upon."
+          },
+          "dependentFilterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists dependent upon this FilterList."
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterLists.Directory.Api.Contracts.Models.ListDetailsVm.ViewUrlVm": {
+        "type": "object",
+        "properties": {
+          "segmentNumber": {
+            "type": "integer",
+            "description": "The segment number of the URL for the FilterList (for multi-part lists).",
+            "format": "int32",
+            "example": 1
+          },
+          "primariness": {
+            "type": "integer",
+            "description": "How primary the URL is for the FilterList segment (1 is original, 2+ is a mirror; unique per SegmentNumber)",
+            "format": "int32",
+            "example": 1
+          },
+          "url": {
+            "type": "string",
+            "description": "The view URL.",
+            "format": "uri",
+            "example": "https://easylist.to/easylist/easylist.txt"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterLists.Directory.Api.Contracts.Models.ListVm": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The identifier.",
+            "format": "int64",
+            "example": 301
+          },
+          "name": {
+            "type": "string",
+            "description": "The unique name in title case.",
+            "example": "EasyList"
+          },
+          "description": {
+            "type": "string",
+            "description": "The brief description in English (preferably quoted from the project).",
+            "nullable": true,
+            "example": "EasyList is the primary filter list that removes most adverts from international web pages, including unwanted frames, images, and objects. It is the most popular list used by many ad blockers and forms the basis of over a dozen combination and supplementary filter lists."
+          },
+          "licenseId": {
+            "type": "integer",
+            "description": "The identifier of the License under which this FilterList is released.",
+            "format": "int64",
+            "example": 4
+          },
+          "syntaxIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Syntaxes implemented by this FilterList.",
+            "example": [
+              3
+            ]
+          },
+          "languageIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Languages targeted by this FilterList.",
+            "example": [
+              37
+            ]
+          },
+          "tagIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Tags applied to this FilterList.",
+            "example": [
+              2
+            ]
+          },
+          "primaryViewUrl": {
+            "type": "string",
+            "description": "The primary view URL.",
+            "format": "uri",
+            "nullable": true,
+            "example": "https://easylist.to/easylist/easylist.txt"
+          },
+          "maintainerIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Maintainers of this FilterList.",
+            "example": [
+              7
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterLists.Directory.Application.Queries.GetLanguages.LanguageVm": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The identifier.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 37
+          },
+          "iso6391": {
+            "type": "string",
+            "description": "The unique ISO 639-1 code.",
+            "readOnly": true,
+            "example": "en"
+          },
+          "name": {
+            "type": "string",
+            "description": "The unique ISO name.",
+            "readOnly": true,
+            "example": "English"
+          },
+          "filterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists targeted by this Language.",
+            "readOnly": true,
+            "example": [
+              114,
+              141
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterLists.Directory.Application.Queries.GetLicenses.LicenseVm": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The identifier.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 5
+          },
+          "name": {
+            "type": "string",
+            "description": "The unique name.",
+            "readOnly": true,
+            "example": "All Rights Reserved"
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL of the home page.",
+            "format": "uri",
+            "nullable": true,
+            "readOnly": true,
+            "example": "https://en.wikipedia.org/wiki/All_rights_reserved"
+          },
+          "permitsModification": {
+            "type": "boolean",
+            "description": "If the License permits modification.",
+            "readOnly": true,
+            "example": false
+          },
+          "permitsDistribution": {
+            "type": "boolean",
+            "description": "If the License permits distribution.",
+            "readOnly": true,
+            "example": false
+          },
+          "permitsCommercialUse": {
+            "type": "boolean",
+            "description": "If the License permits commercial use.",
+            "readOnly": true,
+            "example": false
+          },
+          "filterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists released under this License.",
+            "readOnly": true,
+            "example": [
+              6,
+              31
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterLists.Directory.Application.Queries.GetMaintainers.MaintainerVm": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The identifier.",
+            "format": "int64",
+            "example": 7
+          },
+          "name": {
+            "type": "string",
+            "description": "The unique name.",
+            "example": "The EasyList Authors"
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL of the home page.",
+            "format": "uri",
+            "nullable": true,
+            "example": "https://easylist.to/"
+          },
+          "emailAddress": {
+            "type": "string",
+            "description": "The email address.",
+            "nullable": true,
+            "example": null
+          },
+          "twitterHandle": {
+            "type": "string",
+            "description": "The Twitter handle.",
+            "nullable": true,
+            "example": null
+          },
+          "filterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists maintained by this Maintainer.",
+            "example": [
+              11,
+              13,
+              301
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterLists.Directory.Application.Queries.GetSoftware.SoftwareVm": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The identifier.",
+            "format": "int64",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "description": "The unique name.",
+            "example": "Adblock Plus"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description.",
+            "nullable": true,
+            "example": "Adblock Plus is a free extension that allows you to customize your web experience. You can block annoying ads, disable tracking and lots more. It’s available for all major desktop browsers and for your mobile devices."
+          },
+          "homeUrl": {
+            "type": "string",
+            "description": "The URL of the home page.",
+            "format": "uri",
+            "nullable": true,
+            "example": "https://adblockplus.org/"
+          },
+          "downloadUrl": {
+            "type": "string",
+            "description": "The URL of the Software download.",
+            "format": "uri",
+            "nullable": true,
+            "example": "https://adblockplus.org/"
+          },
+          "supportsAbpUrlScheme": {
+            "type": "boolean",
+            "description": "If the Software supports the abp: URL scheme to click-to-subscribe to a FilterList.",
+            "example": true
+          },
+          "syntaxIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Syntaxes that this Software supports.",
+            "example": [
+              3,
+              28,
+              38,
+              48
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterLists.Directory.Application.Queries.GetSyntaxes.SyntaxVm": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The identifier.",
+            "format": "int64",
+            "example": 3
+          },
+          "name": {
+            "type": "string",
+            "description": "The unique name.",
+            "example": "Adblock Plus"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description.",
+            "nullable": true,
+            "example": null
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL of the home page.",
+            "format": "uri",
+            "nullable": true,
+            "example": "https://adblockplus.org/filters"
+          },
+          "filterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists implementing this Syntax.",
+            "example": [
+              2,
+              6,
+              11
+            ]
+          },
+          "softwareIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the Software that supports this Syntax.",
+            "example": [
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterLists.Directory.Application.Queries.GetTags.TagVm": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The identifier.",
+            "format": "int64",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "description": "The unique name.",
+            "example": "ads"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description.",
+            "nullable": true,
+            "example": "Blocks advertisements"
+          },
+          "filterListIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The identifiers of the FilterLists to which this Tag is applied.",
+            "example": [
+              1,
+              3,
+              6
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "Microsoft.AspNetCore.Mvc.ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      }
+    }
+  }
+}
